@@ -4,16 +4,21 @@
 #
 Name     : mvn-maven-invoker
 Version  : 3.0.1
-Release  : 2
+Release  : 3
 URL      : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.jar
 Source0  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.jar
-Source1  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.jar
-Source2  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.pom
-Source3  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.pom
+Source1  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/2.0.9/maven-invoker-2.0.9.jar
+Source2  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/2.0.9/maven-invoker-2.0.9.pom
+Source3  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.jar
+Source4  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.pom
+Source5  : https://repo1.maven.org/maven2/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.pom
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0
 Requires: mvn-maven-invoker-data = %{version}-%{release}
+Requires: mvn-maven-invoker-license = %{version}-%{release}
+BuildRequires : apache-maven
+BuildRequires : buildreq-mvn
 
 %description
 No detailed description available
@@ -26,22 +31,40 @@ Group: Data
 data components for the mvn-maven-invoker package.
 
 
+%package license
+Summary: license components for the mvn-maven-invoker package.
+Group: Default
+
+%description license
+license components for the mvn-maven-invoker package.
+
+
 %prep
+%setup -q -n META-INF
 
 %build
 
 %install
+mkdir -p %{buildroot}/usr/share/package-licenses/mvn-maven-invoker
+cp LICENSE %{buildroot}/usr/share/package-licenses/mvn-maven-invoker/LICENSE
+cp NOTICE %{buildroot}/usr/share/package-licenses/mvn-maven-invoker/NOTICE
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.1
 cp %{SOURCE0} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.jar
 
-mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0
-cp %{SOURCE1} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.jar
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/2.0.9
+cp %{SOURCE1} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/2.0.9/maven-invoker-2.0.9.jar
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/2.0.9
+cp %{SOURCE2} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/2.0.9/maven-invoker-2.0.9.pom
 
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0
-cp %{SOURCE2} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.pom
+cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.jar
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0
+cp %{SOURCE4} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.pom
 
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.1
-cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.pom
+cp %{SOURCE5} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.pom
 
 
 %files
@@ -49,7 +72,14 @@ cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/org/apache/maven/shared
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/2.0.9/maven-invoker-2.0.9.jar
+/usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/2.0.9/maven-invoker-2.0.9.pom
 /usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.jar
 /usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.0/maven-invoker-3.0.0.pom
 /usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.jar
 /usr/share/java/.m2/repository/org/apache/maven/shared/maven-invoker/3.0.1/maven-invoker-3.0.1.pom
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/mvn-maven-invoker/LICENSE
+/usr/share/package-licenses/mvn-maven-invoker/NOTICE
